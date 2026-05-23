@@ -3,6 +3,50 @@
 // Ultra-minimalist Admin Dashboard
 // ═══════════════════════════════════════════════
 
+// --- AUTHENTICATION CHECK ---
+const token = localStorage.getItem('token');
+if (!token && !window.location.pathname.includes('login.html')) {
+    window.location.href = 'login.html';
+}
+
+// --- GLOBAL FETCH INTERCEPTOR FOR AUTH ---
+const originalFetch = window.fetch;
+window.fetch = async function () {
+    let [resource, config] = arguments;
+    if (!config) config = {};
+    if (!config.headers) config.headers = {};
+    
+    // Sadece /api/ isteklerine token ekle
+    if (typeof resource === 'string' && resource.includes('/api/')) {
+        config.headers['Authorization'] = `Bearer ${token}`;
+    }
+    
+    const response = await originalFetch(resource, config);
+    if (response.status === 401 || response.status === 403) {
+        // Token expired or invalid
+        localStorage.removeItem('token');
+        window.location.href = 'login.html';
+    }
+    return response;
+};
+
+// --- LOGOUT & USER INITIALIZATION ---
+function logout() {
+    localStorage.removeItem('token');
+    localStorage.removeItem('username');
+    localStorage.removeItem('role');
+    window.location.href = 'login.html';
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+    const uname = localStorage.getItem('username');
+    if (uname) {
+        const avatarStr = uname.substring(0, 2).toUpperCase();
+        const avatarEl = document.getElementById('userAvatar');
+        if (avatarEl) avatarEl.textContent = avatarStr;
+    }
+});
+
 const API = 'http://localhost:3000/api';
 let allMembers = [];
 let memberFilterVal = 'all';

@@ -30,6 +30,57 @@ async function connectDB() {
     }
 }
 
+
+// =============================================
+// AUTHENTICATION & MIDDLEWARE
+// =============================================
+const jwt = require('jsonwebtoken');
+const bcrypt = require('bcryptjs');
+const SECRET_KEY = 'flexcore_super_secret_key_2026';
+
+app.post('/api/auth/login', async (req, res) => {
+    const { username, password } = req.body;
+    try {
+        const result = await pool.request()
+            .input('username', sql.NVarChar, username)
+            .query("SELECT * FROM YONETICILER WHERE kullanici_adi = @username");
+        
+        if (result.recordset.length === 0) {
+            return res.status(401).json({ error: 'Kullanıcı bulunamadı.' });
+        }
+
+        const user = result.recordset[0];
+        const isMatch = await bcrypt.compare(password, user.sifre_hash);
+
+        if (!isMatch) {
+            return res.status(401).json({ error: 'Hatalı şifre.' });
+        }
+
+        const token = jwt.sign({ id: user.yonetici_id, role: user.rol }, SECRET_KEY, { expiresIn: '8h' });
+        res.json({ success: true, token, role: user.rol, username: user.kullanici_adi });
+    } catch (err) {
+        res.status(500).json({ error: 'Sunucu hatası: ' + err.message });
+    }
+});
+
+// Middleware to protect API routes
+const verifyToken = (req, res, next) => {
+    const bearerHeader = req.headers['authorization'];
+    if (!bearerHeader) return res.status(403).json({ error: 'Erişim reddedildi. Token eksik.' });
+
+    const token = bearerHeader.split(' ')[1];
+    jwt.verify(token, SECRET_KEY, (err, decoded) => {
+        if (err) return res.status(401).json({ error: 'Geçersiz veya süresi dolmuş token.' });
+        req.user = decoded;
+        next();
+    });
+};
+
+// Protect all /api/ routes EXCEPT /api/auth/login
+app.use('/api', (req, res, next) => {
+    if (req.path.startsWith('/auth/login')) return next();
+    verifyToken(req, res, next);
+});
 // =============================================
 // DASHBOARD
 // =============================================

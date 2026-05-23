@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="tr" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FlexCore — Giriş Yap</title>
+  
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Montserrat:ital,wght@0,700;0,800;0,900;1,800;1,900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="stylesheet" href="style.css">
+
+  <style>
+    body {
+      background: var(--gray-50);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      margin: 0;
+    }
+    
+    .login-container {
+      background: var(--white);
+      border: 1px solid var(--gray-200);
+      border-radius: var(--radius-lg);
+      padding: var(--sp-40);
+      width: 100%;
+      max-width: 420px;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+    }
+    
+    .login-brand {
+      text-align: center;
+      margin-bottom: var(--sp-32);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: var(--sp-12);
+    }
+    
+    .login-brand-icon {
+      width: 56px;
+      height: 56px;
+      background: var(--accent);
+      color: var(--black);
+      border-radius: var(--radius-md);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: var(--text-2xl);
+      font-family: var(--font-heading);
+      font-weight: 900;
+      font-style: italic;
+    }
+    
+    .login-brand-text {
+      font-family: var(--font-heading);
+      font-size: var(--text-2xl);
+      font-weight: 900;
+      color: var(--black);
+      text-transform: uppercase;
+      letter-spacing: -0.05em;
+      font-style: italic;
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: var(--sp-6);
+      margin-bottom: var(--sp-20);
+    }
+
+    .form-group label {
+      font-size: var(--text-sm);
+      font-weight: 500;
+      color: var(--gray-400);
+    }
+
+    .form-group input {
+      padding: var(--sp-12);
+      background: var(--gray-100);
+      border: 1px solid var(--gray-200);
+      border-radius: var(--radius-md);
+      color: var(--black);
+      font-size: var(--text-base);
+      font-family: var(--font);
+      outline: none;
+      transition: border-color var(--ease);
+    }
+
+    .form-group input:focus {
+      border-color: var(--accent);
+    }
+
+    .login-btn {
+      width: 100%;
+      margin-top: var(--sp-8);
+      padding: var(--sp-16);
+      font-size: var(--text-lg);
+    }
+
+    .error-msg {
+      color: var(--danger);
+      font-size: var(--text-sm);
+      margin-bottom: var(--sp-16);
+      text-align: center;
+      display: none;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="login-container">
+    <div class="login-brand">
+      <div class="login-brand-icon">FC</div>
+      <div class="login-brand-text">FlexCore</div>
+    </div>
+
+    <div class="error-msg" id="loginError"></div>
+
+    <form id="loginForm">
+      <div class="form-group">
+        <label>Kullanıcı Adı</label>
+        <input type="text" id="username" placeholder="admin" required autocomplete="username">
+      </div>
+      <div class="form-group">
+        <label>Şifre</label>
+        <input type="password" id="password" placeholder="••••••••" required autocomplete="current-password">
+      </div>
+      <button type="submit" class="pill-btn login-btn">GİRİŞ YAP <i class="fas fa-arrow-right"></i></button>
+    </form>
+  </div>
+
+  <script src="login.js"></script>
+</body>
+</html>
