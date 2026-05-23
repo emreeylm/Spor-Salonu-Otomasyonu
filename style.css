@@ -14,10 +14,10 @@
    1. CSS CUSTOM PROPERTIES
    ————————————————————————————————————————————— */
 :root {
-  /* — Brand / Accent — */
-  --accent:        #0044FF;
-  --accent-hover:  #0036CC;
-  --accent-light:  #EFF6FF;
+  /* — Brand / Accent (Electric Orange for Light Mode) — */
+  --accent:        #FF5722;
+  --accent-hover:  #E64A19;
+  --accent-light:  #FFEDE8;
 
   /* — Neutrals — */
   --black:         #0A0A0A;
@@ -65,7 +65,8 @@
   --radius-full: 9999px;
 
   /* — Typography — */
-  --font:        'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --font:          'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --font-heading:  'Montserrat', sans-serif;
   --text-xs:     11px;
   --text-sm:     13px;
   --text-base:   14px;
@@ -85,18 +86,18 @@
 }
 
 [data-theme="dark"] {
-  /* — Brand / Accent — */
-  --accent:        #6366f1; /* Vibrant indigo */
-  --accent-hover:  #4f46e5;
-  --accent-light:  rgba(99, 102, 241, 0.15);
+  /* — Brand / Accent (Neon Lime for Dark Mode) — */
+  --accent:        #CCFF00; /* Neon Lime */
+  --accent-hover:  #AACC00;
+  --accent-light:  rgba(204, 255, 0, 0.15);
 
   /* — Neutrals for Dark Mode — */
   --black:         #F9FAFB; /* Flipped text color */
-  --white:         #0F1115; /* Main surface */
-  --gray-50:       #0A0C10; /* Main background */
-  --gray-100:      #1F232B;
-  --gray-200:      #2D323E; /* Borders */
-  --gray-300:      #3C4252;
+  --white:         #111111; /* Main surface */
+  --gray-50:       #000000; /* Main background */
+  --gray-100:      #1A1A1A;
+  --gray-200:      #2A2A2A; /* Borders */
+  --gray-300:      #333333;
   --gray-400:      #6B7280;
   --gray-500:      #9CA3AF;
   --gray-600:      #D1D5DB;
@@ -115,13 +116,6 @@
   --blue-bg:       rgba(59, 130, 246, 0.15);
   --blue-fg:       #60A5FA;
   --danger:        #EF4444;
-}
-
-/* — Vibrant Colorful Accents for Light Mode — */
-:root {
-  --accent: #4F46E5;
-  --accent-hover: #4338CA;
-  --accent-light: #EEF2FF;
 }
 
 /* —————————————————————————————————————————————
@@ -213,16 +207,21 @@ input, select, textarea {
   align-items: center;
   justify-content: center;
   font-size: var(--text-lg);
-  font-weight: 700;
+  font-weight: 800;
+  font-style: italic;
   flex-shrink: 0;
 }
 
 .rail-brand .brand-text {
-  font-size: var(--text-lg);
-  font-weight: 600;
+  font-family: var(--font-heading);
+  font-size: var(--text-xl);
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: -0.05em;
   color: var(--black);
   white-space: nowrap;
   overflow: hidden;
+  font-style: italic; /* Classic gym/sports brand look */
 }
 
 /* — Navigation — */
@@ -443,8 +442,11 @@ input, select, textarea {
 }
 
 .page-intro h1 {
-  font-size: var(--text-2xl);
-  font-weight: 600;
+  font-family: var(--font-heading);
+  font-size: var(--text-3xl); /* Increased size for gym feel */
+  font-weight: 800; /* Extra bold */
+  text-transform: uppercase;
+  letter-spacing: -0.02em;
   color: var(--black);
   line-height: 1.2;
 }
@@ -481,21 +483,22 @@ input, select, textarea {
 }
 
 .kpi-card .kpi-icon {
-  width: 36px;
-  height: 36px;
+  width: 40px;
+  height: 40px;
   border-radius: var(--radius-md);
-  background: var(--gray-50);
+  background: var(--accent-light);
   display: flex;
   align-items: center;
   justify-content: center;
-  color: var(--gray-500);
+  color: var(--accent);
   font-size: var(--text-lg);
   margin-bottom: var(--sp-4);
 }
 
 .kpi-card .kpi-value {
+  font-family: var(--font-heading);
   font-size: var(--text-3xl);
-  font-weight: 600;
+  font-weight: 800;
   color: var(--black);
   line-height: 1;
 }
@@ -631,14 +634,21 @@ input, select, textarea {
   gap: var(--sp-8);
   padding: var(--sp-8) var(--sp-16);
   border-radius: var(--radius-md);
-  font-size: var(--text-base);
-  font-weight: 500;
+  font-family: var(--font-heading);
+  font-size: var(--text-sm);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
   background: var(--accent);
-  color: var(--white);
+  color: var(--black); /* Black text on neon/orange bg looks better for gym */
   border: 1px solid transparent;
-  transition: background var(--ease), border-color var(--ease), color var(--ease);
+  transition: background var(--ease), border-color var(--ease), color var(--ease), transform 100ms ease;
   white-space: nowrap;
   line-height: 1.4;
+}
+
+.pill-btn:active {
+  transform: scale(0.97);
 }
 
 .pill-btn:hover {
@@ -1185,14 +1195,21 @@ input, select, textarea {
   padding: var(--sp-24);
 }
 
-.dash-card .dash-card-title {
-  font-size: var(--text-base);
-  font-weight: 600;
+.dash-card .dash-card-title,
+.card-header .card-title {
+  font-family: var(--font-heading);
+  font-size: var(--text-lg);
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: -0.02em;
   color: var(--black);
-  margin-bottom: var(--sp-16);
+}
+
+.card-header {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  margin-bottom: var(--sp-16);
 }
 
 /* —————————————————————————————————————————————
