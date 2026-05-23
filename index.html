@@ -1,0 +1,605 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FlexCore — Spor Salonu Yönetimi</title>
+  <meta name="description" content="Modern spor salonu otomasyon ve yönetim paneli">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- ═══════════════ LEFT SIDEBAR ═══════════════ -->
+  <nav class="rail">
+    <div class="rail-brand">
+      <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect width="32" height="32" rx="8" fill="currentColor"/>
+        <text x="16" y="21" text-anchor="middle" font-size="14" font-weight="700" fill="#fff" font-family="Inter, sans-serif">FC</text>
+      </svg>
+      <span class="brand-name">FlexCore</span>
+    </div>
+
+    <ul class="rail-nav">
+      <li class="rail-item active" data-page="dashboard">
+        <i class="fas fa-chart-pie"></i>
+        <span class="rail-label">Genel Bakış</span>
+      </li>
+      <li class="rail-item" data-page="members">
+        <i class="fas fa-users"></i>
+        <span class="rail-label">Üyeler</span>
+      </li>
+      <li class="rail-item" data-page="trainers">
+        <i class="fas fa-user-tie"></i>
+        <span class="rail-label">Eğitmenler</span>
+      </li>
+      <li class="rail-item" data-page="schedule">
+        <i class="fas fa-calendar-days"></i>
+        <span class="rail-label">Ders Programı</span>
+      </li>
+      <li class="rail-item" data-page="payments">
+        <i class="fas fa-wallet"></i>
+        <span class="rail-label">Ödemeler</span>
+      </li>
+      <li class="rail-item" data-page="equipment">
+        <i class="fas fa-dumbbell"></i>
+        <span class="rail-label">Ekipman</span>
+      </li>
+    </ul>
+
+    <div class="rail-bottom">
+      <i class="fas fa-gear"></i>
+    </div>
+  </nav>
+
+  <!-- ═══════════════ MAIN CONTENT ═══════════════ -->
+  <div class="main">
+
+    <!-- ——— TOPBAR ——— -->
+    <header class="topbar">
+      <div class="topbar-left">
+        <span class="page-breadcrumb" id="breadcrumb">Genel Bakış</span>
+      </div>
+      <div class="topbar-center">
+        <!-- Search bar removed as per user request -->
+      </div>
+      <div class="topbar-right">
+        <button id="themeToggle" class="topbar-icon-btn"><i class="fas fa-moon"></i></button>
+        <div class="topbar-clock" id="clock"></div>
+        <div class="topbar-avatar">EA</div>
+      </div>
+    </header>
+
+    <!-- ════════════════════════════════════════════ -->
+    <!--  PAGE: DASHBOARD                            -->
+    <!-- ════════════════════════════════════════════ -->
+    <section class="page active" id="page-dashboard">
+
+      <div class="page-intro">
+        <h1>Genel Bakış</h1>
+        <p>Spor salonunun anlık durumu</p>
+      </div>
+
+      <!-- KPI CARDS -->
+      <div class="kpi-grid">
+        <div class="kpi-card">
+          <div class="kpi-header">
+            <span class="kpi-label">Toplam Üye</span>
+            <span class="kpi-icon"><i class="fas fa-users"></i></span>
+          </div>
+          <div class="kpi-number" id="stat-uye">—</div>
+        </div>
+        <div class="kpi-card">
+          <div class="kpi-header">
+            <span class="kpi-label">Aktif Üyelik</span>
+            <span class="kpi-icon"><i class="fas fa-id-card"></i></span>
+          </div>
+          <div class="kpi-number" id="stat-uyelik">—</div>
+        </div>
+        <div class="kpi-card">
+          <div class="kpi-header">
+            <span class="kpi-label">Eğitmenler</span>
+            <span class="kpi-icon"><i class="fas fa-user-tie"></i></span>
+          </div>
+          <div class="kpi-number" id="stat-egitmen">—</div>
+        </div>
+        <div class="kpi-card">
+          <div class="kpi-header">
+            <span class="kpi-label">Aylık Gelir</span>
+            <span class="kpi-icon"><i class="fas fa-turkish-lira-sign"></i></span>
+          </div>
+          <div class="kpi-number" id="stat-gelir">—</div>
+        </div>
+      </div>
+
+      <!-- DASHBOARD GRID -->
+      <div class="dash-grid">
+
+        <!-- Card A: Salon Doluluk -->
+        <div class="dash-card">
+          <div class="card-header">
+            <span class="card-title">Salon Doluluk</span>
+            <span class="card-subtitle">Anlık</span>
+          </div>
+          <div class="occupancy">
+            <div class="occupancy-numbers">
+              <span class="occupancy-current">142</span>
+              <span class="occupancy-sep">/</span>
+              <span class="occupancy-max">300</span>
+            </div>
+            <div class="progress-bar"><div class="progress-fill" style="width:47%"></div></div>
+            <span class="occupancy-label">kişi salonda</span>
+          </div>
+        </div>
+
+        <!-- Card B: Hızlı İşlemler -->
+        <div class="dash-card">
+          <div class="card-header">
+            <span class="card-title">Hızlı İşlemler</span>
+          </div>
+          <div class="quick-actions">
+            <button class="qa-btn" onclick="goTo('members');setTimeout(showAddForm,100)">
+              <i class="fas fa-user-plus"></i><span>Yeni Üye Ekle</span>
+            </button>
+            <button class="qa-btn" onclick="goTo('members')">
+              <i class="fas fa-list-ul"></i><span>Üye Listesi</span>
+            </button>
+            <button class="qa-btn" onclick="goTo('payments');setTimeout(showPaymentForm,100)">
+              <i class="fas fa-receipt"></i><span>Ödeme Ekle</span>
+            </button>
+            <button class="qa-btn" onclick="goTo('schedule')">
+              <i class="fas fa-calendar-check"></i><span>Ders Programı</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Card C: Son Girişler -->
+        <div class="dash-card span-2">
+          <div class="card-header">
+            <span class="card-title">Son Girişler</span>
+            <span class="card-subtitle">Son 5</span>
+          </div>
+          <div class="mini-list" id="recentEntriesBody">
+            <div class="loading-row"><i class="fas fa-spinner fa-spin"></i> Yükleniyor...</div>
+          </div>
+        </div>
+
+        <!-- Card D: Üyeliği Bitmek Üzere -->
+        <div class="dash-card span-2">
+          <div class="card-header">
+            <span class="card-title">Üyeliği Bitmek Üzere</span>
+            <span class="card-badge orange">Uyarı</span>
+          </div>
+          <table class="inner-table">
+            <thead>
+              <tr><th>Üye</th><th>Paket</th><th>Kalan Gün</th></tr>
+            </thead>
+            <tbody id="expiringBody">
+              <tr><td colspan="3" class="empty-row"><i class="fas fa-spinner fa-spin"></i></td></tr>
+            </tbody>
+          </table>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ════════════════════════════════════════════ -->
+    <!--  PAGE: MEMBERS                              -->
+    <!-- ════════════════════════════════════════════ -->
+    <section class="page" id="page-members">
+
+      <div class="page-intro">
+        <h1>Üyeler</h1>
+        <button class="pill-btn" onclick="showAddForm()"><i class="fas fa-plus"></i> Yeni Üye</button>
+      </div>
+
+      <!-- Add Member Form Panel -->
+      <div class="form-panel" id="addMemberForm">
+        <div class="form-panel-header">
+          <span class="form-panel-title">Yeni Üye Ekle</span>
+          <button class="form-close-btn" onclick="hideForm('addMemberForm')">&times;</button>
+        </div>
+        <form onsubmit="addMember(event)">
+          <div class="form-grid">
+            <div class="form-group">
+              <label for="inp_tc">TC Kimlik No</label>
+              <input type="text" id="inp_tc" maxlength="11" placeholder="11 haneli TC" required>
+            </div>
+            <div class="form-group">
+              <label for="inp_ad">Ad</label>
+              <input type="text" id="inp_ad" placeholder="Ad" required>
+            </div>
+            <div class="form-group">
+              <label for="inp_soyad">Soyad</label>
+              <input type="text" id="inp_soyad" placeholder="Soyad" required>
+            </div>
+            <div class="form-group">
+              <label for="inp_dogum">Doğum Tarihi</label>
+              <input type="date" id="inp_dogum" required>
+            </div>
+            <div class="form-group">
+              <label for="inp_cinsiyet">Cinsiyet</label>
+              <select id="inp_cinsiyet" required>
+                <option value="">Seçiniz</option>
+                <option value="Erkek">Erkek</option>
+                <option value="Kadın">Kadın</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="inp_tel">Telefon</label>
+              <input type="tel" id="inp_tel" placeholder="05XX XXX XX XX" required>
+            </div>
+            <div class="form-group">
+              <label for="inp_email">E-posta</label>
+              <input type="email" id="inp_email" placeholder="ornek@mail.com">
+            </div>
+            <div class="form-group">
+              <label for="inp_kayit">Kayıt Tarihi</label>
+              <input type="date" id="inp_kayit" title="Boş bırakılırsa bugün kaydedilir">
+            </div>
+            <div class="form-group">
+              <label for="inp_paket">Paket</label>
+              <select id="inp_paket" required>
+                <option value="">Seçiniz</option>
+                <option value="Aylık">Aylık</option>
+                <option value="3 Aylık">3 Aylık</option>
+                <option value="6 Aylık">6 Aylık</option>
+                <option value="Yıllık">Yıllık</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="inp_odeme">Ödeme Yöntemi</label>
+              <select id="inp_odeme" required>
+                <option value="">Seçiniz</option>
+                <option value="Nakit">Nakit</option>
+                <option value="Kredi Kartı">Kredi Kartı</option>
+                <option value="Havale/EFT">Havale/EFT</option>
+              </select>
+            </div>
+            <div class="form-group full-width">
+              <label for="inp_adres">Adres</label>
+              <textarea id="inp_adres" rows="2" placeholder="Adres"></textarea>
+            </div>
+          </div>
+          <div class="form-actions">
+            <button type="submit" class="pill-btn">Kaydet</button>
+            <button type="button" class="pill-btn secondary" onclick="hideForm('addMemberForm')">İptal</button>
+          </div>
+        </form>
+      </div>
+
+      <!-- Filter Bar -->
+      <div class="filter-bar">
+        <div class="filter-search">
+          <i class="fas fa-search"></i>
+          <input type="text" id="memberSearch" placeholder="Üye ara...">
+        </div>
+        <div class="segmented-control">
+          <button class="seg-btn active" data-filter="all">Tümü</button>
+          <button class="seg-btn" data-filter="active">Aktif</button>
+          <button class="seg-btn" data-filter="expired">Süresi Dolmuş</button>
+        </div>
+      </div>
+
+      <!-- Members Table -->
+      <div class="dash-card no-pad">
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>Ad Soyad</th>
+              <th>TC Kimlik</th>
+              <th>Telefon</th>
+              <th>Paket</th>
+              <th>Bitiş</th>
+              <th>Durum</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody id="membersBody"></tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- ════════════════════════════════════════════ -->
+    <!--  PAGE: TRAINERS                             -->
+    <!-- ════════════════════════════════════════════ -->
+    <section class="page" id="page-trainers">
+
+      <div class="page-intro">
+        <h1>Eğitmenler</h1>
+        <button class="pill-btn" onclick="showForm('addTrainerForm')"><i class="fas fa-plus"></i> Eğitmen Ekle</button>
+      </div>
+
+      <!-- Add Trainer Form Panel -->
+      <div class="form-panel" id="addTrainerForm">
+        <div class="form-panel-header">
+          <span class="form-panel-title">Eğitmen Ekle</span>
+          <button class="form-close-btn" onclick="hideForm('addTrainerForm')">&times;</button>
+        </div>
+        <form onsubmit="addTrainer(event)">
+          <div class="form-grid">
+            <div class="form-group">
+              <label for="t_tc">TC Kimlik No</label>
+              <input type="text" id="t_tc" maxlength="11" placeholder="11 haneli TC" required>
+            </div>
+            <div class="form-group">
+              <label for="t_ad">Ad</label>
+              <input type="text" id="t_ad" placeholder="Ad" required>
+            </div>
+            <div class="form-group">
+              <label for="t_soyad">Soyad</label>
+              <input type="text" id="t_soyad" placeholder="Soyad" required>
+            </div>
+            <div class="form-group">
+              <label for="t_tel">Telefon</label>
+              <input type="tel" id="t_tel" placeholder="05XX XXX XX XX" required>
+            </div>
+            <div class="form-group">
+              <label for="t_email">E-posta</label>
+              <input type="email" id="t_email" placeholder="ornek@mail.com">
+            </div>
+            <div class="form-group">
+              <label for="t_deneyim">Deneyim (Yıl)</label>
+              <input type="number" id="t_deneyim" min="0" placeholder="Yıl" required>
+            </div>
+            <div class="form-group">
+              <label for="t_maas">Maaş (₺)</label>
+              <input type="number" id="t_maas" min="0" placeholder="Maaş" required>
+            </div>
+            <div class="form-group">
+              <label for="t_baslama">Başlama Tarihi</label>
+              <input type="date" id="t_baslama" required>
+            </div>
+            <div class="form-group">
+              <label for="t_sertifika">Sertifikalar</label>
+              <input type="text" id="t_sertifika" placeholder="Virgülle ayırın">
+            </div>
+            <div class="form-group full-width">
+              <label>Uzmanlık Alanları</label>
+              <div class="checkbox-grid" id="uzmanlik_checkboxes">
+                <label class="check-label"><input type="checkbox" value="Fitness"> Fitness</label>
+                <label class="check-label"><input type="checkbox" value="Pilates"> Pilates</label>
+                <label class="check-label"><input type="checkbox" value="Yoga"> Yoga</label>
+                <label class="check-label"><input type="checkbox" value="Kickboks"> Kickboks</label>
+                <label class="check-label"><input type="checkbox" value="CrossFit"> CrossFit</label>
+                <label class="check-label"><input type="checkbox" value="Yüzme"> Yüzme</label>
+                <label class="check-label"><input type="checkbox" value="Boks"> Boks</label>
+                <label class="check-label"><input type="checkbox" value="Beslenme"> Beslenme</label>
+              </div>
+            </div>
+          </div>
+          <div class="form-actions">
+            <button type="submit" class="pill-btn">Kaydet</button>
+            <button type="button" class="pill-btn secondary" onclick="hideForm('addTrainerForm')">İptal</button>
+          </div>
+        </form>
+      </div>
+
+      <div class="trainer-grid" id="trainersGrid"></div>
+    </section>
+
+    <!-- ════════════════════════════════════════════ -->
+    <!--  PAGE: SCHEDULE                             -->
+    <!-- ════════════════════════════════════════════ -->
+    <section class="page" id="page-schedule">
+
+      <div class="page-intro">
+        <h1>Ders Programı</h1>
+        <button class="pill-btn" onclick="showForm('addScheduleForm')"><i class="fas fa-plus"></i> Ders Ekle</button>
+      </div>
+
+      <!-- Add Schedule Form Panel -->
+      <div class="form-panel" id="addScheduleForm">
+        <div class="form-panel-header">
+          <span class="form-panel-title">Ders Ekle</span>
+          <button class="form-close-btn" onclick="hideForm('addScheduleForm')">&times;</button>
+        </div>
+        <form onsubmit="addSchedule(event)">
+          <div class="form-grid">
+            <div class="form-group">
+              <label for="s_ders">Ders Adı</label>
+              <input type="text" id="s_ders" placeholder="Ders adı" required>
+            </div>
+            <div class="form-group">
+              <label for="s_egitmen">Eğitmen</label>
+              <select id="s_egitmen" required>
+                <option value="">Seçiniz</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="s_salon">Salon</label>
+              <input type="text" id="s_salon" placeholder="Salon adı" required>
+            </div>
+            <div class="form-group">
+              <label for="s_gun">Gün</label>
+              <select id="s_gun" required>
+                <option value="">Seçiniz</option>
+                <option value="Pazartesi">Pazartesi</option>
+                <option value="Salı">Salı</option>
+                <option value="Çarşamba">Çarşamba</option>
+                <option value="Perşembe">Perşembe</option>
+                <option value="Cuma">Cuma</option>
+                <option value="Cumartesi">Cumartesi</option>
+                <option value="Pazar">Pazar</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="s_bas">Başlangıç</label>
+              <input type="time" id="s_bas" required>
+            </div>
+            <div class="form-group">
+              <label for="s_bit">Bitiş</label>
+              <input type="time" id="s_bit" required>
+            </div>
+          </div>
+          <div class="form-actions">
+            <button type="submit" class="pill-btn">Kaydet</button>
+            <button type="button" class="pill-btn secondary" onclick="hideForm('addScheduleForm')">İptal</button>
+          </div>
+        </form>
+      </div>
+
+      <!-- Day Strip -->
+      <div class="day-strip" id="dayTabs">
+        <button class="day-chip active" data-day="Pazartesi">Pzt</button>
+        <button class="day-chip" data-day="Salı">Sal</button>
+        <button class="day-chip" data-day="Çarşamba">Çar</button>
+        <button class="day-chip" data-day="Perşembe">Per</button>
+        <button class="day-chip" data-day="Cuma">Cum</button>
+        <button class="day-chip" data-day="Cumartesi">Cmt</button>
+        <button class="day-chip" data-day="Pazar">Paz</button>
+      </div>
+
+      <div class="class-grid" id="scheduleGrid"></div>
+    </section>
+
+    <!-- ════════════════════════════════════════════ -->
+    <!--  PAGE: PAYMENTS                             -->
+    <!-- ════════════════════════════════════════════ -->
+    <section class="page" id="page-payments">
+
+      <div class="page-intro">
+        <h1>Ödemeler</h1>
+        <button class="pill-btn" onclick="showPaymentForm()"><i class="fas fa-plus"></i> Ödeme Ekle</button>
+      </div>
+
+      <!-- Add Payment Form Panel -->
+      <div class="form-panel" id="addPaymentForm">
+        <div class="form-panel-header">
+          <span class="form-panel-title">Ödeme Ekle</span>
+          <button class="form-close-btn" onclick="hideForm('addPaymentForm')">&times;</button>
+        </div>
+        <form onsubmit="addPayment(event)">
+          <div class="form-grid">
+            <div class="form-group">
+              <label for="p_uye">Üye</label>
+              <select id="p_uye" required>
+                <option value="">Seçiniz</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="p_tutar">Tutar (₺)</label>
+              <input type="number" id="p_tutar" min="0" placeholder="Tutar" required>
+            </div>
+            <div class="form-group">
+              <label for="p_yontem">Ödeme Yöntemi</label>
+              <select id="p_yontem" required>
+                <option value="">Seçiniz</option>
+                <option value="Nakit">Nakit</option>
+                <option value="Kredi Kartı">Kredi Kartı</option>
+                <option value="Havale/EFT">Havale/EFT</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="p_tur">Tür</label>
+              <select id="p_tur" required>
+                <option value="">Seçiniz</option>
+                <option value="Üyelik">Üyelik</option>
+                <option value="PT">PT</option>
+                <option value="Ürün">Ürün</option>
+                <option value="Diğer">Diğer</option>
+              </select>
+            </div>
+            <div class="form-group full-width">
+              <label for="p_aciklama">Açıklama</label>
+              <textarea id="p_aciklama" rows="2" placeholder="Açıklama"></textarea>
+            </div>
+          </div>
+          <div class="form-actions">
+            <button type="submit" class="pill-btn">Kaydet</button>
+            <button type="button" class="pill-btn secondary" onclick="hideForm('addPaymentForm')">İptal</button>
+          </div>
+        </form>
+      </div>
+
+      <!-- Payments Table -->
+      <div class="dash-card no-pad">
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>Üye</th>
+              <th>Tutar</th>
+              <th>Yöntem</th>
+              <th>Tür</th>
+              <th>Tarih</th>
+              <th>Durum</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody id="paymentsBody"></tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- ════════════════════════════════════════════ -->
+    <!--  PAGE: EQUIPMENT                            -->
+    <!-- ════════════════════════════════════════════ -->
+    <section class="page" id="page-equipment">
+
+      <div class="page-intro">
+        <h1>Ekipman</h1>
+        <button class="pill-btn" onclick="showForm('addEquipmentForm')"><i class="fas fa-plus"></i> Ekipman Ekle</button>
+      </div>
+
+      <!-- Add Equipment Form Panel -->
+      <div class="form-panel" id="addEquipmentForm">
+        <div class="form-panel-header">
+          <span class="form-panel-title">Ekipman Ekle</span>
+          <button class="form-close-btn" onclick="hideForm('addEquipmentForm')">&times;</button>
+        </div>
+        <form onsubmit="addEquipment(event)">
+          <div class="form-grid">
+            <div class="form-group">
+              <label for="e_ad">Ekipman Adı</label>
+              <input type="text" id="e_ad" placeholder="Ekipman adı" required>
+            </div>
+            <div class="form-group">
+              <label for="e_marka">Marka</label>
+              <input type="text" id="e_marka" placeholder="Marka">
+            </div>
+            <div class="form-group">
+              <label for="e_model">Model</label>
+              <input type="text" id="e_model" placeholder="Model">
+            </div>
+            <div class="form-group">
+              <label for="e_salon">Salon</label>
+              <input type="text" id="e_salon" placeholder="Salon" required>
+            </div>
+            <div class="form-group">
+              <label for="e_tarih">Alım Tarihi</label>
+              <input type="date" id="e_tarih" required>
+            </div>
+          </div>
+          <div class="form-actions">
+            <button type="submit" class="pill-btn">Kaydet</button>
+            <button type="button" class="pill-btn secondary" onclick="hideForm('addEquipmentForm')">İptal</button>
+          </div>
+        </form>
+      </div>
+
+      <div class="equipment-grid" id="equipmentGrid"></div>
+    </section>
+
+  </div><!-- /.canvas -->
+
+  <!-- ═══════════════ TOAST ═══════════════ -->
+  <div class="toast" id="toast"></div>
+
+  <!-- ═══════════════ CONFIRM MODAL ═══════════════ -->
+  <div class="modal-overlay" id="confirmOverlay">
+    <div class="confirm-modal">
+      <i class="fas fa-triangle-exclamation"></i>
+      <p id="confirmMsg">Emin misiniz?</p>
+      <div class="confirm-actions">
+        <button class="pill-btn danger" id="confirmYes">Evet</button>
+        <button class="pill-btn secondary" onclick="document.getElementById('confirmOverlay').classList.remove('visible')">İptal</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
